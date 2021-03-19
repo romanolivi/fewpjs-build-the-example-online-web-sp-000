@@ -2,6 +2,12 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
+document.addEventListener("DOMContentLoaded", () => {
+  const like = document.getElementsByClassName('like-glyph')
+  for (const l of like) {
+    l.addEventListener("click", likeCallback)
+  }
+});
 
 function likeCallback(e) {
   let heart = e.target;
