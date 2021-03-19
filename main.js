@@ -2,14 +2,28 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
 
+function likeCallback(e) {
+  let heart = e.target;
+  if (heart.innerText === FULL_HEART) {
+    heart.innerText = EMPTY_HEART;
+    heart.removeAttribute('class', 'activated-heart');
+  } else if (heart.innerText === EMPTY_HEART) {
+    mimicServerCall()
+    .then(response => {
+      heart.innerText = FULL_HEART;
+      heart.setAttribute('class', 'activated-heart');
+    })
+    .catch(function(error) {
+      const modal = document.getElementById('modal');
+      modal.removeAttribute('class', 'hidden');
+      modal.innerText = "Server Error!";
+      setTimeout(() => modal.setAttribute('class', 'hidden'), 3000);
+    })
+  }
+  
+}
 
-
-
-//------------------------------------------------------------------------------
-// Don't change the code below: this function mocks the server response
-//------------------------------------------------------------------------------
 
 function mimicServerCall(url="http://mimicServer.example.com", config={}) {
   return new Promise(function(resolve, reject) {
@@ -23,3 +37,4 @@ function mimicServerCall(url="http://mimicServer.example.com", config={}) {
     }, 300);
   });
 }
+
